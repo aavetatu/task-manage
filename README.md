@@ -1,5 +1,7 @@
 # Task Management System - DevOps Project
 
+TODO: Käännetään tämä myös suomeks README_fi.md tiedostoon.
+
 A full-stack task management application built for learning DevOps practices including CI/CD pipelines, containerization, and cloud deployment.
 
 ## Features
