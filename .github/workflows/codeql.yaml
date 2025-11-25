@@ -1,4 +1,4 @@
-name: CodeQL
+name: Advanced CodeQL
 
 on:
   push:
@@ -41,3 +41,6 @@ jobs:
         uses: github/codeql-action/analyze@v4
         with:
           category: "/language:${{matrix.language}}"
+      - name: Check for outdated or vulnerable dependencies
+        run: |
+          npm audit fix --audit-level=low
