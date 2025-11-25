@@ -1,0 +1,32 @@
+name: CodeQL
+
+on:
+  push:
+    - "main"
+  pull_request:
+    - "main"
+  schedule:
+    - cron: '20 18 * * 5'
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+            build-mode: none
+          - language: javascpirt-typescript
+            build-mode: none
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
