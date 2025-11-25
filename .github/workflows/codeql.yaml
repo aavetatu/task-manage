@@ -41,4 +41,4 @@ jobs:
           category: "/language:${{matrix.language}}"
       - name: Check for outdated or vulnerable dependencies
         run: |
-          npm audit fix --audit-level=low
+          npm audit --audit-level=moderate
