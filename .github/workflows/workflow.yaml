@@ -17,7 +17,9 @@ jobs:
         working-directory: ./backend
         run: npm install
       - name: Run build
+        working-directory: ./backend
         run: npm run build
       - name: Run backend
+        working-directory: ./backend
         run: npm run dev
 
