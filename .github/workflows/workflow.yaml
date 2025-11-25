@@ -11,15 +11,15 @@ jobs:
   backend:
     name: Backend Build & Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - uses: actions/checkout@v4
       - name: Install dependenciens
-        working-directory: ./backend
         run: npm install
       - name: Run build
-        working-directory: ./backend
         run: npm run build
       - name: Run tests
-        working-directory: ./backend
         run: npm run test
 
