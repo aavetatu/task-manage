@@ -1,6 +1,23 @@
+name: CI workflow
+
 on:
   push:
     branches: [main]
   pull_request:
     branches:
       - main
+
+jobs:
+  backend:
+    name: Backend Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependenciens
+        working-directory: ./backend
+        run: npm install:all
+      - name: Run build
+        run: npm run build:backend
+      - name: Run backend
+        run: npm run dev:backend
+
