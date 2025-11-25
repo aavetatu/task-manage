@@ -26,9 +26,7 @@ jobs:
         include:
           - language: actions
             build-mode: none
-          - language: javascpirt
-            build-mode: none
-          - language: typescript
+          - language: javascript-typescript
             build-mode: none
 
     steps:
