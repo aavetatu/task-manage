@@ -4,26 +4,22 @@ FROM node:24-alpine AS build
 # Set working directory
 WORKDIR /app
 
-ARG VITE_API_URL="http://localhost:5000/api"
-
 # Copy and install dependencies
 COPY package*.json .
-COPY ./frontend/package*.json ./frontend/
 COPY tsconfig*.json .
-COPY ./frontend/tsconfig*.json ./frontend/
-RUN npm i
+RUN npm install
 
 # Copy source code
-COPY ./frontend/ ./frontend/
+COPY . .
 
 # Build app
-RUN npm run build:frontend
+RUN npm run build
 
 # Production stage
 FROM nginx:alpine
 
 # Copy files for built app
-COPY --from=build /app/frontend/dist /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # Serve app in exposed port 80
 EXPOSE 80

@@ -19,14 +19,19 @@ services:
   backend:
     container_name: task-backend
     build:
-      context: .
-      dockerfile: Dockerfile-back
+      context: ./backend/
+      dockerfile: Dockerfile
     depends_on:
       postgres:
         condition: service_healthy
         restart: true
     networks:
       - app_network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:5000/api/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     ports:
       - 5000:5000
     env_file:
@@ -35,8 +40,12 @@ services:
   frontend:
     container_name: task-frontend
     build:
-      context: .
-      dockerfile: Dockerfile-front
+      context: ./frontend/
+      dockerfile: Dockerfile
+    depends_on:
+      backend:
+        condition: service_healthy
+        restart: true
     networks:
       - app_network
     ports:
