@@ -50,6 +50,8 @@ services:
       - app_network
     ports:
       - 8080:80
+    env_file:
+      - "./frontend/.env"
 
 networks:
   app_network:

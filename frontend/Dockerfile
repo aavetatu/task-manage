@@ -4,9 +4,12 @@ FROM node:24-alpine AS build
 # Set working directory
 WORKDIR /app
 
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 # Copy and install dependencies
-COPY package*.json .
-COPY tsconfig*.json .
+COPY package*.json ./
+COPY tsconfig*.json ./
 RUN npm install
 
 # Copy source code
