@@ -1,0 +1,47 @@
+services:
+  postgres:
+    container_name: task-db
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: taskmanagement
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 1s
+      retries: 5
+      timeout: 5s
+
+  backend:
+    container_name: task-backend
+    build:
+      context: .
+      dockerfile: Dockerfile-back
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+    networks:
+      - app_network
+    ports:
+      - 5000:5000
+    env_file:
+      - "./backend/.env"
+
+  frontend:
+    container_name: task-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile-front
+    networks:
+      - app_network
+    ports:
+      - 8080:80
+
+networks:
+  app_network:
+    driver: bridge
