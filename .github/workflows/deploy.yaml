@@ -1,0 +1,16 @@
+name: Deployment to Render
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Frontend
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          frontend_url: ${{ secrets.RENDER_DEPLOY_FRONTEND_HOOK_URL }}
+        run: |
+          curl "$frontend_url"
